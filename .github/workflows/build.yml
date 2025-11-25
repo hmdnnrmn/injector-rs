@@ -1,0 +1,33 @@
+name: Build Injector
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        targets: i686-pc-windows-msvc
+
+    - name: Build
+      working-directory: ./injector_rs
+      run: cargo build
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: injector_rs
+        path: injector_rs/target/i686-pc-windows-msvc/debug/injector_rs.exe
