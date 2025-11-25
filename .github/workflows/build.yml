@@ -23,11 +23,10 @@ jobs:
         targets: i686-pc-windows-msvc
 
     - name: Build
-      working-directory: ./injector_rs
-      run: cargo build
+      run: cargo build --verbose --target i686-pc-windows-msvc
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: injector_rs
-        path: injector_rs/target/i686-pc-windows-msvc/debug/injector_rs.exe
+        path: target/i686-pc-windows-msvc/debug/injector_rs.exe
